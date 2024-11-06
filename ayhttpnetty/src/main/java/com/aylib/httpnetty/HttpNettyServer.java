@@ -82,10 +82,10 @@ public class HttpNettyServer implements NettyServer {
             mChannelFuture = mBootstrap.bind(port).addListener(future -> {
                 if (future.isSuccess()) {
                     System.out.println("Server start success.");
-                    if (mLinstener != null) mLinstener.ServerStart(true);
+                    if (mLinstener != null) mLinstener.serverStart(true);
                 } else {
                     System.out.println("Server start failed.");
-                    if (mLinstener != null) mLinstener.ServerStart(false);
+                    if (mLinstener != null) mLinstener.serverStart(false);
                 }
             }).sync();
             mChannelFuture.channel().closeFuture().sync();

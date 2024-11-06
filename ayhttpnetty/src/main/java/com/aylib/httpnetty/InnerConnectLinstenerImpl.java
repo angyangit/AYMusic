@@ -27,5 +27,9 @@ public abstract class InnerConnectLinstenerImpl implements  InnerConnectLinstene
 
     }
 
+    @Override
+    public void serverStart(boolean succ) {
 
+
+    }
 }

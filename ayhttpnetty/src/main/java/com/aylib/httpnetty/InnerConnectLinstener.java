@@ -7,5 +7,5 @@ public interface InnerConnectLinstener {
     void connectInitActive( );
     void connectInactive();
     void readeTriggered( Object evt);
-    void ServerStart(boolean succ);
+    void serverStart(boolean succ);
 }
