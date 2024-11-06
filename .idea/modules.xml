@@ -2,9 +2,15 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/AYmusic.iml" filepath="$PROJECT_DIR$/AYmusic.iml" />
-      <module fileurl="file://$PROJECT_DIR$/android.iml" filepath="$PROJECT_DIR$/android.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/AYMusic.iml" filepath="$PROJECT_DIR$/.idea/AYMusic.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/AYMusic.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/AYMusic.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/AYMusic.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/AYMusic.app.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/AYMusic.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/AYMusic.app.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/AYMusic.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/AYMusic.app.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ayhttpnetty/AYMusic.ayhttpnetty.iml" filepath="$PROJECT_DIR$/.idea/modules/ayhttpnetty/AYMusic.ayhttpnetty.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ayhttpnetty/AYMusic.ayhttpnetty.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/ayhttpnetty/AYMusic.ayhttpnetty.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ayhttpnetty/AYMusic.ayhttpnetty.main.iml" filepath="$PROJECT_DIR$/.idea/modules/ayhttpnetty/AYMusic.ayhttpnetty.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ayhttpnetty/AYMusic.ayhttpnetty.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/ayhttpnetty/AYMusic.ayhttpnetty.unitTest.iml" />
     </modules>
   </component>
 </project>

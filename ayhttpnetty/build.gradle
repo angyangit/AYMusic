@@ -1,0 +1,48 @@
+plugins {
+    id 'com.android.library'
+}
+
+android {
+    namespace 'com.aylib.httpnetty'
+    compileSdkVersion 30
+
+    defaultConfig {
+        minSdkVersion 21
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    packagingOptions {
+        exclude 'META-INF/INDEX.LIST'
+        exclude 'META-INF/io.netty.versions.properties'
+    }
+}
+
+dependencies {
+//    implementation('io.netty:netty-all:4.1.114.Final')
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+}
+
+task makeJar(type: proguard.gradle.ProGuardTask, dependsOn: "build") {
+    //删除已有的jar包
+    delete 'build/outputs/llconnect.jar'
+    // 未混淆的jar路径
+    injars 'build/intermediates/aar_main_jar/release/classes.jar'
+// 混淆后的jar输出路径
+    outjars 'build/outputs/llconnect.jar'
+    // 混淆协议
+    configuration 'proguard-rules.pro'
+}
