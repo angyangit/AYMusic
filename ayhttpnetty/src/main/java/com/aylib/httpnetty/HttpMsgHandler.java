@@ -17,10 +17,11 @@ public class HttpMsgHandler extends SimpleChannelInboundHandler<FullHttpRequest>
     private InnerConnectLinstener mListener;
     private ChannelHandlerContext mCtx;
 
-
-    public HttpMsgHandler(InnerConnectLinstener mListener) {
+    public void setmListener(InnerConnectLinstener mListener) {
         this.mListener = mListener;
     }
+
+    public HttpMsgHandler() {}
 
     public ChannelHandlerContext getmCtx() {
         return mCtx;

@@ -6,5 +6,5 @@ public interface NettyServer {
      *
      * @param port 监听端口
      */
-    void start(int port,InnerConnectLinstener mLinstener);
+    void start(int port);
 }

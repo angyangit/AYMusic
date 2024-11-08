@@ -13,15 +13,16 @@ public class HttpNettyServer implements NettyServer {
     private volatile static HttpNettyServer singleton;
     private HttpMsgHandler mHttpMsgHandler;
 
-    private HttpNettyServer() {
+    private HttpNettyServer(InnerConnectLinstener linstener) {
+        this.mLinstener = linstener;
         init();
     }
 
-    public static HttpNettyServer getInstance() {
+    public static HttpNettyServer getInstance(InnerConnectLinstener linstener) {
         if (singleton == null) {
             synchronized (HttpNettyServer.class) {
                 if (singleton == null) {
-                    singleton = new HttpNettyServer();
+                    singleton = new HttpNettyServer(linstener);
                 }
             }
         }
@@ -36,16 +37,6 @@ public class HttpNettyServer implements NettyServer {
     private InnerConnectLinstener mLinstener;
 
 
-//    public HttpNettyServer(InnerConnectLinstener linstener) {
-//        this.mLinstener=linstener;
-//        init();
-//    }
-
-
-//    public void setmLinstener(InnerConnectLinstener mLinstener) {
-//        this.mLinstener = mLinstener;
-//    }
-
     /**
      * 初始化
      */
@@ -53,43 +44,51 @@ public class HttpNettyServer implements NettyServer {
         mBootstrap = new ServerBootstrap();
         mWorkerGroup = new NioEventLoopGroup();
         mGroup = new NioEventLoopGroup();
+        MyChannelInitializer myChannelInitializer = new MyChannelInitializer(new ChannelInitLinstener() {
+            @Override
+            public void callBackHandler(HttpMsgHandler handler) {
+                mHttpMsgHandler=handler;
+                mHttpMsgHandler.setmListener(mLinstener);
+            }
+        });
+
         mBootstrap.group(mGroup, mWorkerGroup)
                 .channel(NioServerSocketChannel.class)
                 .option(ChannelOption.TCP_NODELAY, true) // 消息立即发出去
                 .option(ChannelOption.SO_REUSEADDR, true)
                 .childOption(ChannelOption.SO_KEEPALIVE, true) // 保持长链接
 //                .handler(new LoggingHandler(LogLevel.INFO))
-                .childHandler(new ChannelInitializer<SocketChannel>() {
-                    @Override
-                    protected void initChannel(SocketChannel ch) throws Exception {
-                        System.out.println("connected:" + ch.remoteAddress());
-                        // 建立管道
-                        ChannelPipeline channelPipeline = ch.pipeline();
-                        mHttpMsgHandler = new HttpMsgHandler(mLinstener);
-                        channelPipeline
-                                .addLast(new HttpRequestDecoder())
-                                .addLast(new HttpResponseEncoder())
-                                .addLast(new HttpObjectAggregator(1024 * 1024 * 4))
-                                .addLast(mHttpMsgHandler);
-                    }
-                });
+//                .childHandler(new ChannelInitializer<SocketChannel>() {
+//                    @Override
+//                    protected void initChannel(SocketChannel ch) throws Exception {
+//                        System.out.println("connected:" + ch.remoteAddress());
+//                        // 建立管道
+//                        ChannelPipeline channelPipeline = ch.pipeline();
+//                        mHttpMsgHandler = new HttpMsgHandler(mLinstener);
+//                        channelPipeline
+//                                .addLast(new HttpRequestDecoder())
+//                                .addLast(new HttpResponseEncoder())
+//                                .addLast(new HttpObjectAggregator(1024 * 1024 * 4))
+//                                .addLast(mHttpMsgHandler);
+//                    }
+//                });
+                .childHandler(myChannelInitializer);
     }
 
     @Override
-    public void start(int port, InnerConnectLinstener linstener) {
-        this.mLinstener = linstener;
+    public void start(int port) {
         try {
             mChannelFuture = mBootstrap.bind(port).addListener(future -> {
                 if (future.isSuccess()) {
-                    System.out.println("Server start success.");
+//                    System.out.println("Server start success.");
                     if (mLinstener != null) mLinstener.serverStart(true);
                 } else {
-                    System.out.println("Server start failed.");
+//                    System.out.println("Server start failed.");
                     if (mLinstener != null) mLinstener.serverStart(false);
                 }
             }).sync();
             mChannelFuture.channel().closeFuture().sync();
-            System.out.println("Server connection is closed.");
+//            System.out.println("Server connection is closed.");
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -100,7 +99,7 @@ public class HttpNettyServer implements NettyServer {
 
     public void writeResponse(String msg) {
         if (mHttpMsgHandler != null && mHttpMsgHandler.getmCtx() != null) {
-            System.out.println("writeResponse ==> msg=  "+msg);
+//            System.out.println("writeResponse ==> msg=  "+msg);
             //创建一个默认的响应对象
             FullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK);
             //写入数据

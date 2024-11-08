@@ -1,0 +1,1 @@
+命令行   ./gradlew makeJar 打包

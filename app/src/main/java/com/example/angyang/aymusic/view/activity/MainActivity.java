@@ -5,10 +5,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
 
+import a.a.a.f;
+import a.a.a.d;
 import com.example.angyang.aymusic.R;
 
-
 public class MainActivity extends Activity {
+
+    private d httpNettyServer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +29,52 @@ public class MainActivity extends Activity {
 //
 //            }
 //        });
+
+//        InnerConnectLinstenerImpl innerConnectLinstener = new InnerConnectLinstenerImpl() {
+//            @Override
+//            public void requestData(String uri, String requestData) {
+//                Log.d("HttpNettyServer--", "requestData-----" + requestData + "  uri-->" + uri + " currentThread= " + Thread.currentThread());
+//                if ("/facereq/heartbeat".equals(uri)) {
+//                    String resBody = "{\"isSuccess\":true,\"reqUrl\":\"/facereq/heartbeat\"}";
+//                    httpNettyServer.writeResponse(resBody);
+//                    Log.d("HttpMsgHandler", "00-----");
+//                } else if ("/facereq/capture".equals(uri)) {
+//                    String resBody = "{\"isSuccess\":true,\"reqUrl\":\"/facereq/capture\"}";
+//                    httpNettyServer.writeResponse(resBody);
+//
+//                } else if ("/facereq/compare".equals(uri)) {
+//                    Log.d("HttpMsgHandler", "22---- ");
+//                    String resBody = "{\"isSuccess\":true,\"reqUrl\":\"/facereq/compare\"}";
+//                    httpNettyServer.writeResponse(resBody);
+//                }
+//            }
+//        };
+//        httpNettyServer = HttpNettyServer.getInstance(innerConnectLinstener);
+//        httpNettyServer.start(8008);
+
+
+        f innerConnectLinstener = new f() {
+            @Override
+            public void a(String uri, String requestData) {
+                Log.d("HttpNettyServer--", "requestData-----" + requestData + "  uri-->" + uri + " currentThread= " + Thread.currentThread());
+                if ("/facereq/heartbeat".equals(uri)) {
+                    String resBody = "{\"isSuccess\":true,\"reqUrl\":\"/facereq/heartbeat\"}";
+                    httpNettyServer.a(resBody);
+                    Log.d("HttpMsgHandler", "00-----");
+                } else if ("/facereq/capture".equals(uri)) {
+                    String resBody = "{\"isSuccess\":true,\"reqUrl\":\"/facereq/capture\"}";
+                    httpNettyServer.a(resBody);
+
+                } else if ("/facereq/compare".equals(uri)) {
+                    Log.d("HttpMsgHandler", "22---- ");
+                    String resBody = "{\"isSuccess\":true,\"reqUrl\":\"/facereq/compare\"}";
+                    httpNettyServer.a(resBody);
+                }
+            }
+
+        };
+        httpNettyServer = d.a(innerConnectLinstener);
+        httpNettyServer.a(8008);
 
     }
 }
