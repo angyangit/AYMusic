@@ -7,11 +7,12 @@ import android.widget.ImageView;
 
 import a.a.a.f;
 import a.a.a.d;
+import android.widget.Toast;
 import com.example.angyang.aymusic.R;
 
 public class MainActivity extends Activity {
 
-    private d httpNettyServer;
+    private d mLlConnect;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,28 +54,51 @@ public class MainActivity extends Activity {
 //        httpNettyServer.start(8008);
 
 
-        f innerConnectLinstener = new f() {
-            @Override
-            public void a(String uri, String requestData) {
-                Log.d("HttpNettyServer--", "requestData-----" + requestData + "  uri-->" + uri + " currentThread= " + Thread.currentThread());
-                if ("/facereq/heartbeat".equals(uri)) {
-                    String resBody = "{\"isSuccess\":true,\"reqUrl\":\"/facereq/heartbeat\"}";
-                    httpNettyServer.a(resBody);
-                    Log.d("HttpMsgHandler", "00-----");
-                } else if ("/facereq/capture".equals(uri)) {
-                    String resBody = "{\"isSuccess\":true,\"reqUrl\":\"/facereq/capture\"}";
-                    httpNettyServer.a(resBody);
+//        f innerConnectLinstener = new f() {
+//            @Override
+//            public void a(String uri, String requestData) {
+//                Log.d("HttpNettyServer--", "requestData-----" + requestData + "  uri-->" + uri + " currentThread= " + Thread.currentThread());
+//                if ("/facereq/heartbeat".equals(uri)) {
+//                    String resBody = "{\"isSuccess\":true,\"reqUrl\":\"/facereq/heartbeat\"}";
+//                    httpNettyServer.a(resBody);
+//                    Log.d("HttpMsgHandler", "00-----");
+//                } else if ("/facereq/capture".equals(uri)) {
+//                    String resBody = "{\"isSuccess\":true,\"reqUrl\":\"/facereq/capture\"}";
+//                    httpNettyServer.a(resBody);
+//
+//                } else if ("/facereq/compare".equals(uri)) {
+//                    Log.d("HttpMsgHandler", "22---- ");
+//                    String resBody = "{\"isSuccess\":true,\"reqUrl\":\"/facereq/compare\"}";
+//                    httpNettyServer.a(resBody);
+//                }
+//            }
+//
+//        };
+//        httpNettyServer = d.a(innerConnectLinstener);
+//        httpNettyServer.a(8008);
 
-                } else if ("/facereq/compare".equals(uri)) {
-                    Log.d("HttpMsgHandler", "22---- ");
-                    String resBody = "{\"isSuccess\":true,\"reqUrl\":\"/facereq/compare\"}";
-                    httpNettyServer.a(resBody);
+
+        new Thread(() -> {
+            f innerConnectLinstener = new f() {
+                @Override
+                public void a(String uri, String requestData) {
+                    Log.d("HttpNettyServer--", "requestData-----" + requestData + "  uri-->" + uri + " currentThread= " + Thread.currentThread());
+
+                    if ("/facereq/heartbeat".equals(uri)) {
+//                        handlerHeartbeatReq();
+                        String resBody = "{\"isSuccess\":true,\"reqUrl\":\"/facereq/heartbeat\"}";
+                        mLlConnect.a(resBody);
+                    } else if ("/facereq/capture".equals(uri)) {
+//                        handlerFaceImgRegisterReq();
+                    } else if ("/facereq/compare".equals(uri)) {
+//                        handlerIdCompareRegisterReq(uri, requestData);
+                    }
                 }
-            }
-
-        };
-        httpNettyServer = d.a(innerConnectLinstener);
-        httpNettyServer.a(8008);
+            };
+            mLlConnect = d.a(innerConnectLinstener);
+            mLlConnect.a(8008);
+        }
+        ).start();
 
     }
 }
